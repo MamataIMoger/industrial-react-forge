@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Truck,
   Zap,
@@ -1248,6 +1248,19 @@ type TabKey = "description" | "additional" | "reviews";
 const ProductsPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Disable background scroll when sidebar is open (Mobile UX)
+useEffect(() => {
+  if (sidebarOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = ""; // cleanup
+  };
+}, [sidebarOpen]);
+
   const [activeCategory, setActiveCategory] = useState<string>(
     "Hoses & Connectors"
   );
@@ -1261,7 +1274,7 @@ const ProductsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("description");
   const productDetailsRef = React.useRef<HTMLDivElement | null>(null);
 // Restore last selected product on refresh
-React.useEffect(() => {
+useEffect(() => {
   const storedId = localStorage.getItem("selectedProductId");
   if (storedId) {
     const savedProduct = PRODUCT_DATA.find(
@@ -1357,39 +1370,6 @@ const filteredProducts = useMemo(() => {
 
 
   const topProducts = useMemo(() => PRODUCT_DATA.slice(0, 4), []);
-
-  const getMockFilters = (category: string) => {
-    if (category.includes("Hoses")) {
-      return (
-        <div className="p-4 bg-white rounded-xl space-y-3 mt-4 text-sm border border-slate-200 shadow-inner">
-          <p className="font-bold text-slate-800 border-b border-gray-200 pb-2">
-            Refine by Specs
-          </p>
-          <select className="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#F97A1E] transition-all">
-            <option>Pressure Rating (All)</option>
-            <option>Up to 5,000 PSI</option>
-            <option>5,000 - 10,000 PSI</option>
-            <option>Extreme High (10k+)</option>
-          </select>
-          <select className="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#F97A1E] transition-all">
-            <option>Material (All)</option>
-            <option>NBR Rubber</option>
-            <option>Viton</option>
-            <option>Stainless Steel Wire</option>
-          </select>
-        </div>
-      );
-    }
-    return (
-      <div className="p-4 bg-white rounded-xl space-y-2 mt-4 text-xs text-slate-500 border border-slate-200 shadow-inner">
-        <p className="font-bold text-slate-800">
-          No smart filters for this category.
-        </p>
-        <p>Use the search bar above for model numbers.</p>
-      </div>
-    );
-  };
-
   const relatedProducts = selectedProduct
     ? PRODUCT_DATA.filter(
         (p) =>
@@ -1550,17 +1530,23 @@ const filteredProducts = useMemo(() => {
     )}
 
     {/* SIDEBAR */}
-    <aside
-      className={`
-        bg-white p-6 rounded-2xl shadow-xl border border-gray-200 h-fit transition-all duration-300
+<aside
+  className={`
+    bg-white p-6 rounded-2xl shadow-xl border border-gray-200
+    transition-all duration-300 
 
-        /* Mobile Slide-in */
-        ${sidebarOpen ? "fixed top-[120px] left-0 w-64 z-[40]" : "hidden"}
+    /* MOBILE – slide drawer */
+    ${sidebarOpen
+      ? "fixed top-[80px] left-0 w-72 h-[calc(100vh-80px)] overflow-y-auto z-50"
+      : "hidden"
+    }
 
-        /* Desktop Always Visible */
-        lg:block lg:sticky lg:top-[120px] lg:w-1/4
-      `}
-    >
+    /* DESKTOP – sidebar fixed in layout */
+    lg:block lg:sticky lg:top-[120px] lg:w-1/4 lg:h-auto lg:overflow-visible
+  `}
+>
+
+
       {/* Close Button Only Mobile */}
       <div className="lg:hidden flex justify-end mb-3">
         <button onClick={() => setSidebarOpen(false)} className="text-slate-700 text-lg">
@@ -1620,8 +1606,6 @@ const filteredProducts = useMemo(() => {
           );
         })}
       </nav>
-
-      {getMockFilters(activeCategory)}
 
       {/* Popular Items */}
       <div className="mt-8 border-t border-slate-200 pt-5">
