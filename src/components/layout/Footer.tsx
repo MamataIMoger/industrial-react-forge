@@ -10,109 +10,168 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+  const socialLinks = [
+    {
+      Icon: Facebook,
+      label: "Visit our Facebook page",
+      title: "Facebook",
+      href: "#",
+    },
+    {
+      Icon: Twitter,
+      label: "Visit our X (Twitter) profile",
+      title: "X (Twitter)",
+      href: "#",
+    },
+    {
+      Icon: Linkedin,
+      label: "Visit our LinkedIn page",
+      title: "LinkedIn",
+      href: "#",
+    },
+    {
+      Icon: Instagram,
+      label: "Visit our Instagram page",
+      title: "Instagram",
+      href: "#",
+    },
+  ];
+
   return (
     <footer className="bg-primary text-white pt-12 pb-6">
-      {/* make footer slimmer & centered */}
       <div className="max-w-6xl mx-auto px-4">
-        {/* Top 3-column area */}
-        <div className="grid gap-8 lg:grid-cols-[1fr,1.1fr,1fr] items-start">
+        <div className="grid gap-10 lg:grid-cols-3 items-start">
           {/* LEFT – Logo + intro + socials */}
-         {/* LEFT – Logo + intro + socials + product links */}
-<div className="space-y-5">
-  {/* Logo */}
-  <div className="flex items-center gap-3">
-    <div>
-      <p className="text-lg font-bold leading-tight">
-        WEST LEGEND TRADING LLC
-      </p>
-    </div>
-  </div>
-
-  {/* Short description */}
-  <p className="text-xs text-white/80 max-w-sm leading-relaxed">
-    Trusted supplier of marine, offshore and oilfield equipment across
-    the UAE and GCC — delivering certified products, reliable service
-    and on-time project support.
-  </p>
-
-  {/* Social icons */}
-  <div className="flex gap-3">
-    {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
-      <a
-        key={i}
-        href="#"
-        className="h-8 w-8 flex items-center justify-center rounded-full border border-white/30 hover:bg-white hover:text-[#003049] transition-colors"
-      >
-        <Icon size={14} />
-      </a>
-    ))}
-  </div>
-
-  {/* Product Links (NEW) */}
-  <div className="pt-2">
-    <h4 className="text-sm font-semibold mb-2 text-white/90">Products</h4>
-
-    <ul className="space-y-1 text-xs text-white/75">
-      <li>
-        <Link to="/products" className="hover:text-secondary transition-colors">
-          Valves & Flow Control
-        </Link>
-      </li>
-      <li>
-        <Link to="/products" className="hover:text-secondary transition-colors">
-          Pipes, Tubes & Fittings
-        </Link>
-      </li>
-      <li>
-        <Link to="/products" className="hover:text-secondary transition-colors">
-          Flanges & Gaskets
-        </Link>
-      </li>
-      <li>
-        <Link to="/products" className="hover:text-secondary transition-colors">
-          Marine & Offshore Equipment
-        </Link>
-      </li>
-      <li>
-        <Link to="/products" className="hover:text-secondary transition-colors">
-          Safety & PPE
-        </Link>
-      </li>
-    </ul>
-  </div>
-</div>
-
-
-          {/* MIDDLE – Write Us form (smaller & slimmer) */}
-          <div className="bg-white text-[#003049] rounded-xl shadow-xl px-6 py-7 mx-auto w-full max-w-sm">
-            <h2 className="text-xl font-bold text-center mb-5">Write Us</h2>
-
-            <form className="space-y-3">
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="w-full rounded-md border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
-              />
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                className="w-full rounded-md border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
-              />
-              <textarea
-                rows={3}
-                placeholder="Your Message"
-                className="w-full rounded-md border border-slate-200 px-3 py-2 text-xs outline-none resize-none focus:ring-2 focus:ring-secondary focus:border-secondary"
-              />
-
-              <div className="pt-1 flex justify-center">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-full bg-gradient-to-r from-[#ff7e32] to-[#ffb347] text-white text-xs font-semibold shadow-md hover:brightness-105 transition-all"
-                >
-                  Send Message
-                </button>
+          <div className="space-y-5">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <div>
+                <p className="text-lg font-bold leading-tight tracking-wide">
+                  WEST LEGEND TRADING LLC
+                </p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/60 mt-1">
+                  Marine • Offshore • Oil &amp; Gas Supply
+                </p>
               </div>
-            </form>
+            </div>
+
+            {/* Short description */}
+            <p className="text-xs text-white/80 max-w-sm leading-relaxed">
+              Trusted supplier of marine, offshore and oilfield equipment across
+              the UAE and GCC — delivering certified products, reliable service
+              and on-time project support.
+            </p>
+
+            {/* Social icons */}
+            <div className="flex gap-3">
+              {socialLinks.map(({ Icon, label, title, href }) => (
+                <a
+                  key={title}
+                  href={href}
+                  aria-label={label}
+                  title={title}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="h-8 w-8 flex items-center justify-center rounded-full border border-white/30 hover:bg-white hover:text-[#003049] transition-colors"
+                >
+                  <Icon size={14} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* MIDDLE – Quick links + Products */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1 text-xs text-white/80">
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-sm font-semibold mb-2 text-white/90">
+                Quick Links
+              </h4>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    to="/"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/about"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Products
+                  </Link>
+                </li>
+               
+                <li>
+                  <Link
+                    to="/contact"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h4 className="text-sm font-semibold mb-2 text-white/90">
+                Product Categories
+              </h4>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Valves &amp; Flow Control
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Pipes, Tubes &amp; Fittings
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Flanges &amp; Gaskets
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Marine &amp; Offshore Equipment
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/products"
+                    className="hover:text-secondary transition-colors"
+                  >
+                    Safety &amp; PPE
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* RIGHT – Contact info */}
@@ -125,9 +184,7 @@ const Footer = () => {
                 </div>
                 <span className="font-semibold text-sm">Phone</span>
               </div>
-              <p className="ml-11 pb-1.5">
-                +971 4 272 1901
-              </p>
+              <p className="ml-11 pb-1.5">+971 4 272 1901</p>
               <p className="ml-11 border-b border-white/25 pb-1.5">
                 +971 4 266 4574
               </p>
@@ -159,7 +216,7 @@ const Footer = () => {
                 <br />
                 Serving UAE &amp; GCC Region
               </p>
-            </div>            
+            </div>
           </div>
         </div>
 
