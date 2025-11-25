@@ -105,8 +105,10 @@ All colors MUST be HSL.
 
 @layer base {
   * {
-    @apply border-border;
-  }
+  @apply border-border;
+  font-family: "Poppins";   /* 👈 ADD THIS ONE LINE */
+}
+
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
